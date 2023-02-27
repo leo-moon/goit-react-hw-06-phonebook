@@ -1,78 +1,64 @@
 // import { nanoid } from 'nanoid';
 // import { useState, useEffect } from 'react';
 
-import { useEffect } from 'react';
+// import { useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 
 import styles from './phonebook.module.scss';
 import ContactForm from './ContactForm/ContactForm';
 import FindContact from './FindContact/FindContact';
-import findCntct from '../../components/findCntct';
+// import findCntct from '../../components/findCntct';
 import Button from 'Modules/Button/Button';
 
-import { addContact, deleteContact } from 'redux/actions';
-import {getAllContacts} from '../../redux/selectors'
+import { addContact, deleteContact, filterContacts } from 'redux/actions';
+import { getFilter, getFilterContacts } from '../../redux/selectors';
 
 const Phonebook = () => {
   // const [contacts, setContacts] = useState(() => {
   //   const contacts = JSON.parse(localStorage.getItem('phonebook'));
   //   return contacts ? contacts : [];
   // });
-  const contacts = useSelector(getAllContacts);
-  const filter = useSelector(store => store.filter);
-
-  // console.log('Phonebook 20 ', contacts);
+  
+  const contactsFilter = useSelector(getFilterContacts);
+  const filter = useSelector(getFilter);
 
   const dispatch = useDispatch();
 
-  // const [filter, setFilter] = useState('');
-
-  useEffect(() => {
-    localStorage.setItem('phonebook', JSON.stringify(contacts));
-  }, [contacts]);
+  // useEffect(() => {
+  //   localStorage.setItem('phonebook', JSON.stringify(contacts));
+  // }, [contacts]);
 
   const handleAddContact = ({ name, number }) => {
     //friends
-    // if (isDublicate(name)) {
-    //   return alert(`${name} is already in contacts`);
-    // }
+    if (isDublicate(name)) {
+      return alert(`${name} is already in contacts`);
+    }
 
     dispatch(addContact({ name, number }));
   };
 
-  // const isDublicate = name => {
-  //   const nameLower = name.toLowerCase();
-  //   const dublicate = contacts.find(
-  //     contact => contact.name.toLowerCase() === nameLower
-  //   );
-  //   return Boolean(dublicate);
-  // };
+  const isDublicate = name => {
+    const nameLower = name.toLowerCase();
+    const dublicate = contactsFilter.find(
+      contact => contact.name.toLowerCase() === nameLower
+    );
+    return Boolean(dublicate);
+  };
 
   const removeContact = id => {
     dispatch(deleteContact({ id }));
   };
 
-  // const handleFilter = ({ target }) => {
-  //   setFilter(() => {
-  //     return target.value;
-  //   });
-  // };
-
-  const contactsFilter = findCntct(filter, contacts);
+  const handleFilter = ({ target }) => {
+    dispatch(filterContacts(target.value));
+  };
+  console.log(filter);
   const elementsLi = contactsFilter.map(({ id, name, number }) => (
     <li className={styles.li} key={id}>
       <div>
         {name} : {number}
       </div>
       <Button removeContact={removeContact} id={id} />
-
-      {/* <button
-        onClick={() => removeContact(id)}
-        className={`${styles.btn} ${styles.deleteBtn}`}
-        type="button"
-      >
-        Delete
-      </button> */}
     </li>
   ));
   const elements =
@@ -87,7 +73,7 @@ const Phonebook = () => {
 
         <h3 className={styles.mainTitle}>Contacts</h3>
         <div className={styles.find}>
-          <FindContact />
+          <FindContact handleFilter={handleFilter} />
           <ul>{elements}</ul>
         </div>
       </div>
@@ -96,19 +82,3 @@ const Phonebook = () => {
 };
 
 export default Phonebook;
-
-//  return (
-//     <>
-//       <div className={styles.div}>
-//         <h3 className={styles.mainTitle}>Phonebook Form</h3>
-
-//         <ContactForm onSubmit={addContact} />
-//         <h3 className={styles.mainTitle}>Contacts</h3>
-//         <div className={styles.find}>
-//           <FindContact handleFilter={handleFilter} />
-//           <ul>{elementsLi}</ul>
-//         </div>
-//       </div>
-//     </>
-//   );
-// };

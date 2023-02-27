@@ -1,6 +1,5 @@
 import { nanoid } from '@reduxjs/toolkit';
-import { ADD_CONTACT } from './types';
-import { DELETE_CONTACT } from './types';
+import { ADD_CONTACT, DELETE_CONTACT, SET_FILTER } from './types';
 
 const initialStore = {
   contacts: [
@@ -22,6 +21,10 @@ const reducer = (store = initialStore, action) => {
         contact => contact.id !== action.payload.id
       );
       return { ...store, contacts: newContactsDelete };
+    case SET_FILTER:
+    //   const filterContacts = 5;
+    //   return 5;
+      return { ...store, filter: action.payload };
     default:
       return store;
   }

@@ -37,8 +37,7 @@ const Phonebook = () => {
     //   return alert(`${name} is already in contacts`);
     // }
 
-    const action = addContact({ name, number });
-    dispatch(action);
+    dispatch(addContact({ name, number }));
   };
 
   // const isDublicate = name => {
@@ -50,8 +49,7 @@ const Phonebook = () => {
   // };
 
   const removeContact = id => {
-    const action = deleteContact({ id });
-    dispatch(action);
+    dispatch(deleteContact({ id }));
   };
 
   // const handleFilter = ({ target }) => {

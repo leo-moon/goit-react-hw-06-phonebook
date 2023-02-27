@@ -1,5 +1,3 @@
-// import { useSelector } from 'react-redux';
-
 import styles from './find-contact.module.scss';
 
 const FindContact = ({ handleFilter }) => {

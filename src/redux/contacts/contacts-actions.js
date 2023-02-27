@@ -1,5 +1,5 @@
 import { nanoid } from '@reduxjs/toolkit';
-import { ADD_CONTACT, DELETE_CONTACT, SET_FILTER } from './types';
+import { ADD_CONTACT, DELETE_CONTACT } from './contacts-types';
 
 export const addContact = payload => {
   return {
@@ -18,9 +18,3 @@ export const deleteContact = payload => {
   };
 };
 
-export const filterContacts = payload => {
-  return {
-    type: SET_FILTER,
-    payload,
-  };
-};

@@ -1,25 +1,28 @@
-// import { nanoid } from 'nanoid';
-// import { useState, useEffect } from 'react';
-
-// import { useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 
 import styles from './phonebook.module.scss';
 import ContactForm from './ContactForm/ContactForm';
 import FindContact from './FindContact/FindContact';
-// import findCntct from '../../components/findCntct';
 import Button from 'Modules/Button/Button';
 
-import { addContact, deleteContact, filterContacts } from 'redux/actions';
-import { getFilter, getFilterContacts } from '../../redux/selectors';
+import { addContact, deleteContact } from 'redux/contacts/contacts-actions';
+import { filterContacts } from 'redux/filter/filter-actions';
+
+import {
+  getAllContacts,
+  getFilterContacts,
+} from '../../redux/contacts/contacts-selectors';
+
+import { getFilter } from '../../redux/filter/filter-selectors';
 
 const Phonebook = () => {
   // const [contacts, setContacts] = useState(() => {
   //   const contacts = JSON.parse(localStorage.getItem('phonebook'));
   //   return contacts ? contacts : [];
   // });
-  
+
   const contactsFilter = useSelector(getFilterContacts);
+  const contacts = useSelector(getAllContacts);
   const filter = useSelector(getFilter);
 
   const dispatch = useDispatch();
@@ -39,7 +42,7 @@ const Phonebook = () => {
 
   const isDublicate = name => {
     const nameLower = name.toLowerCase();
-    const dublicate = contactsFilter.find(
+    const dublicate = contacts.find(
       contact => contact.name.toLowerCase() === nameLower
     );
     return Boolean(dublicate);
@@ -68,6 +71,7 @@ const Phonebook = () => {
   return (
     <>
       <div className={styles.div}>
+
         <h3 className={styles.mainTitle}>Phonebook</h3>
         <ContactForm onSubmit={handleAddContact} />
 

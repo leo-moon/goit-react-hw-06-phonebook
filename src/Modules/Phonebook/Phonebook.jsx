@@ -11,13 +11,14 @@ import findCntct from '../../components/findCntct';
 import Button from 'Modules/Button/Button';
 
 import { addContact, deleteContact } from 'redux/actions';
+import {getAllContacts} from '../../redux/selectors'
 
 const Phonebook = () => {
   // const [contacts, setContacts] = useState(() => {
   //   const contacts = JSON.parse(localStorage.getItem('phonebook'));
   //   return contacts ? contacts : [];
   // });
-  const contacts = useSelector(store => store.contacts);
+  const contacts = useSelector(getAllContacts);
   const filter = useSelector(store => store.filter);
 
   // console.log('Phonebook 20 ', contacts);

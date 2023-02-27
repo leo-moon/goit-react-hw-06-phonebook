@@ -32,7 +32,7 @@ const Phonebook = () => {
   // }, [contacts]);
 
   const handleAddContact = ({ name, number }) => {
-    //friends
+    //----------------------  add friends filter ???
     if (isDublicate(name)) {
       return alert(`${name} is already in contacts`);
     }
